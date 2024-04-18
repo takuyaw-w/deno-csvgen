@@ -17,6 +17,9 @@ jobs:
         with:
           deno-version: 1.42.3
 
+      - name: test
+        run: ls -la
+
       - name: Build CLI tool for Windows
         run: deno compile --allow-read --allow-write --output=csvgen.exe --target=x86_64-pc-windows-msvc ./cli.ts
 
