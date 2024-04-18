@@ -32,6 +32,11 @@ jobs:
       - name: Buld CLI tool for Mac(ARM)
         run: deno compile --allow-read --allow-write --output=csvgen --target=aarch64-apple-darwin ./cli.ts
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: test
+        run: ls -la
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files:
+      #       csvgen
