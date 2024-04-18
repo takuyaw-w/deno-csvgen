@@ -39,7 +39,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: csvgen-for-windows.exe
-            csvgen-for-linux
-            csvgen-for-mac-with-x86_64
-            csvgen-for-mac-with-arm
+          files: |
+            "csvgen-for-windows.exe"
+            "csvgen-for-linux"
+            "csvgen-for-mac-with-x86_64"
+            "csvgen-for-mac-with-arm"
