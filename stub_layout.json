@@ -1,0 +1,32 @@
+{
+  "columns": [
+    {
+      "name": "column-name1",
+      "type": "string",
+      "min": 6,
+      "max": 10
+    },
+    {
+      "name": "column-name2",
+      "type": "integer",
+      "min": 1,
+      "max": 200
+    },
+    {
+      "name": "column-name3",
+      "type": "timestamp"
+    },
+    {
+      "name": "column-name4",
+      "type": "date"
+    },
+    {
+      "name": "column-name5",
+      "type": "time"
+    },
+    {
+      "name": "column-name6",
+      "type": "boolean"
+    }
+  ]
+}
