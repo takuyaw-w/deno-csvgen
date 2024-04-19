@@ -16,11 +16,11 @@ function generateRandomValue(column: Column) {
         case "boolean":
             return faker.number.int({ min: 0, max: 1 });
         case "timestamp":
-            return format(new Date(), "yyyy-mm-dd HH:MM:SS");
+            return format(new Date(), "yyyy-MM-dd HH:mm:ss");
         case "date":
-            return format(new Date(), "yyyy-mm-dd");
+            return format(new Date(), "yyyy-MM-dd");
         case "time":
-            return format(new Date(), "HH:MM");
+            return format(new Date(), "HH:mm");
     }
 }
 
