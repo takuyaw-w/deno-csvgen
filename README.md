@@ -20,6 +20,7 @@ csvgen --layout <input> [-d <delimiter>] [-o <filepath>] [-n <rows>]
 - -d, --delimiter \<delimiter\>: Specify the delimiter (Default: "comma", Values: "comma", "tab", "space", "pipe").
 - -o, --output \<filepath\>: Path to the output file (Default: "./dummy.csv").
 - -n, --rows \<rows\>: Number of rows (Default: 10).
+- -H, --no-header: Generate CSV without header.
 
 Replace `<input>`, `<delimiter>`, `<filepath>`, and `<rows>` with the appropriate values according to your usage.
 
