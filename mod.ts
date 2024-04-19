@@ -47,31 +47,45 @@ function getDelimiter(delimiter: "comma" | "tab" | "space" | "pipe") {
     }
 }
 
-export async function generateCsv(
-    _layout: string,
+export async function generateCsv(options: {
+    layout: string,
     delimiter: "comma" | "tab" | "space" | "pipe",
     output: string,
     rows: number,
-) {
+    header: boolean
+}) {
     // JSON読み取り処理
-    const json = JSON.parse(await Deno.readTextFile(_layout))
+    const json = JSON.parse(await Deno.readTextFile(options.layout))
     const layout = layoutSchema.parse(json);
     const csvHeaders = layout.columns.map((c) => c.name);
     // 書き込み処理
-    const file = await Deno.open(output, {
+    const file = await Deno.open(options.output, {
         create: true,
         write: true,
         truncate: true,
     });
-    ReadableStream.from(generateOutput(layout, rows))
+    const st = ReadableStream.from(generateOutput(layout, options.rows))
         .pipeThrough(
             new CsvStringifyStream({
                 columns: csvHeaders,
-                separator: getDelimiter(delimiter),
+                separator: getDelimiter(options.delimiter),
             }),
         )
         .pipeThrough(new TextEncoderStream())
-        .pipeTo(file.writable);
+
+    const re = st.getReader()
+
+    if (!options.header) {
+        await re.read()
+    }
+
+    while (true) {
+        const { done, value } = await re.read()
+        if (done) {
+            break
+        }
+        await file.write(value)
+    }
 }
 
 export async function generateLayoutFile() {

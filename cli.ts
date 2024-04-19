@@ -20,10 +20,10 @@ try {
       default: "./dummy.csv",
     })
     .option("-n, --rows <rows:number>", "rows", { default: 10 })
+    .option("-H, --no-header", "header-less")
     .stopEarly()
     .action(async (options) => {
-      const { layout, delimiter, output, rows } = options;
-      await generateCsv(layout, delimiter, output, rows);
+      await generateCsv(options);
     })
     .command(
       "layout",
