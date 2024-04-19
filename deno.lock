@@ -5,6 +5,7 @@
       "jsr:@cliffy/command@^1.0.0-rc.4": "jsr:@cliffy/command@1.0.0-rc.4",
       "jsr:@cliffy/flags@1.0.0-rc.4": "jsr:@cliffy/flags@1.0.0-rc.4",
       "jsr:@cliffy/table@1.0.0-rc.4": "jsr:@cliffy/table@1.0.0-rc.4",
+      "jsr:@deno-library/progress@^1.4.9": "jsr:@deno-library/progress@1.4.9",
       "jsr:@std/assert@^0.221.0": "jsr:@std/assert@0.221.0",
       "jsr:@std/assert@^0.222.1": "jsr:@std/assert@0.222.1",
       "jsr:@std/assert@^0.223.0": "jsr:@std/assert@0.223.0",
@@ -40,6 +41,12 @@
         "integrity": "990e4e0b3910e6c9cf7a5b4318b8f5e121cf681494c94fd113febb9b4d4c0741",
         "dependencies": [
           "jsr:@std/console@0.221"
+        ]
+      },
+      "@deno-library/progress@1.4.9": {
+        "integrity": "86db695ae338cb1ae3ffa46d6f2e6a9cdef33a15c2ace6fa25354a91a9dd3909",
+        "dependencies": [
+          "jsr:@std/fmt@0.221.0"
         ]
       },
       "@std/assert@0.221.0": {
@@ -1392,6 +1399,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@cliffy/command@^1.0.0-rc.4",
+      "jsr:@deno-library/progress@^1.4.9",
       "jsr:@std/async@^0.223.0",
       "jsr:@std/csv@^0.223.0",
       "jsr:@std/streams@^0.222.1",

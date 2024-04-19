@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { layoutSchema } from "./types/layout.ts";
 import { CsvStringifyStream } from "@std/csv";
 import type { Column, Layout } from "./types/layout.ts";
+import ProgressBar from '@deno-library/progress'
 import stub from "./stub_layout.json" with { type: "json" };
 
 function generateRandomValue(column: Column) {
@@ -64,6 +65,13 @@ export async function generateCsv(options: {
         write: true,
         truncate: true,
     });
+    let completed = options.header ? 0 : 1
+    const progress = new ProgressBar({
+        title: options.output,
+        total: options.rows,
+        complete: '=',
+        incomplete: '-'
+    })
     const st = ReadableStream.from(generateOutput(layout, options.rows))
         .pipeThrough(
             new CsvStringifyStream({
@@ -84,8 +92,11 @@ export async function generateCsv(options: {
         if (done) {
             break
         }
+        progress.render(completed++)
         await file.write(value)
     }
+
+    file.close()
 }
 
 export async function generateLayoutFile() {
