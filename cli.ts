@@ -20,7 +20,7 @@ try {
       default: "./dummy.csv",
     })
     .option("-n, --rows <rows:number>", "Number of rows", { default: 10 })
-    .option("-H, --no-header", "Generate CSV without header.")
+    .option("--no-header", "Generate CSV without header.")
     .stopEarly()
     .action(async (options) => {
       await generateCsv(options);
