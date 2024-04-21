@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/takuyaw-w/deno-csvgen/main/schema.json",
   "columns": [
     {
       "name": "column-name1",

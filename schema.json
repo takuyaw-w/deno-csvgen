@@ -43,7 +43,10 @@
                 "const": "string"
               }
             },
-            "required": ["min", "max"]
+            "required": ["min", "max"],
+            "not": {
+              "required": ["choices"]
+            }
           },
           {
             "properties": {
@@ -51,7 +54,10 @@
                 "const": "integer"
               }
             },
-            "required": ["min", "max"]
+            "required": ["min", "max"],
+            "not": {
+              "required": ["choices"]
+            }
           },
           {
             "properties": {
@@ -59,15 +65,16 @@
                 "const": "string-choices"
               }
             },
-            "required": ["choices"]
+            "required": ["choices"],
+            "not": {
+              "required": ["min", "max"]
+            }
           },
           {
             "properties": {
-              "type": {
-                "const": "timestamp"
-              }
+              "type": { "enum": ["timestamp", "date", "time", "boolean"] }
             },
-            "required": ["name", "type"]
+            "not": { "required": ["min", "max", "choices"] }
           }
         ]
       }
