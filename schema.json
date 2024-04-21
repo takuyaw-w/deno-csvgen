@@ -60,6 +60,14 @@
               }
             },
             "required": ["choices"]
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "timestamp"
+              }
+            },
+            "required": ["name", "type"]
           }
         ]
       }
