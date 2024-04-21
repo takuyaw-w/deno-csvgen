@@ -11,6 +11,11 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      WINDOWS_FILE: csvgen_for_windows.exe
+      LINUX_FILE: csvgen_for_linux
+      MAC_X86_64_FILE: csvgen_for_mac_x86_64
+      MAC_ARM_FILE: csvgen_for_mac_arm
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -19,13 +24,6 @@ jobs:
         uses: denolib/setup-deno@v2
         with:
           deno-version: 1.42.4
-
-      - name: Set up variables
-        run: |
-          export WINDOWS_FILE=csvgen_for_windows.exe
-          export LINUX_FILE=csvgen_for_linux
-          export MAC_X86_64_FILE=csvgen_for_mac_x86_64
-          export MAC_ARM_FILE=csvgen_for_mac_arm
 
       - name: Build CLI tool
         run: |
