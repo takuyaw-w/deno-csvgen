@@ -4,7 +4,9 @@ A command-line interface (CLI) tool to generate dummy CSV files using Deno.
 
 ## Installation
 
-Please visit the [release page](https://github.com/takuyaw-w/deno-csvgen/releases) to download the latest version.
+Please visit the
+[release page](https://github.com/takuyaw-w/deno-csvgen/releases) to download
+the latest version.
 
 ## Usage
 
@@ -22,7 +24,8 @@ csvgen --layout <input> [-d <delimiter>] [-o <filepath>] [-n <rows>]
 - -n, --rows \<rows\>: Number of rows (Default: 10).
 - --no-header: Generate CSV without header.
 
-Replace `<input>`, `<delimiter>`, `<filepath>`, and `<rows>` with the appropriate values according to your usage.
+Replace `<input>`, `<delimiter>`, `<filepath>`, and `<rows>` with the
+appropriate values according to your usage.
 
 ## Subcommands
 
@@ -34,4 +37,5 @@ Output a sample JSON layout file.
 csvgen layout
 ```
 
-This command will output a sample JSON layout file named layout-sample.json to the current directory.
+This command will output a sample JSON layout file named layout-sample.json to
+the current directory.

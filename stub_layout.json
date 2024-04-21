@@ -8,24 +8,29 @@
     },
     {
       "name": "column-name2",
+      "type": "string-choices",
+      "choices": ["a", "b"]
+    },
+    {
+      "name": "column-name3",
       "type": "integer",
       "min": 1,
       "max": 200
     },
     {
-      "name": "column-name3",
+      "name": "column-name4",
       "type": "timestamp"
     },
     {
-      "name": "column-name4",
+      "name": "column-name5",
       "type": "date"
     },
     {
-      "name": "column-name5",
+      "name": "column-name6",
       "type": "time"
     },
     {
-      "name": "column-name6",
+      "name": "column-name7",
       "type": "boolean"
     }
   ]

@@ -12,7 +12,9 @@ try {
     .meta("v8", Deno.version.v8)
     .meta("typescript", Deno.version.typescript)
     .type("delimiters", delimiters)
-    .option("-l, --layout=<input:file>", "Path to the layout file ", { required: true })
+    .option("-l, --layout=<input:file>", "Path to the layout file ", {
+      required: true,
+    })
     .option("-d, --delimiter <delimiter:delimiters>", "Specify the delimiter", {
       default: "comma",
     })
@@ -30,7 +32,7 @@ try {
       new Command()
         .action(() => {
           generateLayoutFile();
-        }).description('Output a sample JSON layout file.'),
+        }).description("Output a sample JSON layout file."),
     ).parse(Deno.args);
 } catch (err) {
   console.info(err);

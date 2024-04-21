@@ -1,54 +1,75 @@
 import { z } from "zod";
 
-const StringColumn = z.object({
-  name: z.string(),
+const BaseColumnSchema = z.object({
+  name: z.string().min(1),
+  type: z.literal("base"),
+});
+
+const StringColumnSchema = BaseColumnSchema.merge(z.object({
   type: z.literal("string"),
   min: z.number(),
   max: z.number(),
-});
+}));
 
-const IntegerColumn = z.object({
-  name: z.string(),
+export type StringColumn = z.infer<typeof StringColumnSchema>;
+
+const StringChoicesColumnSchema = BaseColumnSchema.merge(
+  z.object({
+    type: z.literal("string-choices"),
+    choices: z.array(z.string().min(1)).min(2),
+  }),
+);
+
+export type StringChoicesColumn = z.infer<typeof StringChoicesColumnSchema>;
+
+const IntegerColumnSchema = BaseColumnSchema.merge(z.object({
   type: z.literal("integer"),
   min: z.number(),
   max: z.number(),
-});
+}));
 
-const TimestampColumn = z.object({
-  name: z.string(),
+export type IntegerColumn = z.infer<typeof IntegerColumnSchema>;
+
+const TimestampColumnSchema = BaseColumnSchema.merge(z.object({
   type: z.literal("timestamp"),
-});
+}));
 
-const DateColumn = z.object({
-  name: z.string(),
+export type TimestampColumn = z.infer<typeof TimestampColumnSchema>;
+
+const DateColumnSchema = BaseColumnSchema.merge(z.object({
   type: z.literal("date"),
-});
+}));
 
-const TimeColumn = z.object({
-  name: z.string(),
+export type DateColumn = z.infer<typeof DateColumnSchema>;
+
+const TimeColumnSchema = BaseColumnSchema.merge(z.object({
   type: z.literal("time"),
-});
+}));
 
-const BooleanColumn = z.object({
-  name: z.string(),
+export type TimeColumn = z.infer<typeof TimeColumnSchema>;
+
+const BooleanColumnSchema = BaseColumnSchema.merge(z.object({
   type: z.literal("boolean"),
-});
+}));
 
-const Column = z.discriminatedUnion("type", [
-  StringColumn,
-  IntegerColumn,
-  TimestampColumn,
-  DateColumn,
-  TimeColumn,
-  BooleanColumn,
+export type BooleanColumn = z.infer<typeof BooleanColumnSchema>;
+
+const ColumnSchema = z.discriminatedUnion("type", [
+  StringColumnSchema,
+  StringChoicesColumnSchema,
+  IntegerColumnSchema,
+  TimestampColumnSchema,
+  DateColumnSchema,
+  TimeColumnSchema,
+  BooleanColumnSchema,
 ]);
 
-export type Column = z.infer<typeof Column>;
+export type Column = z.infer<typeof ColumnSchema>;
 
-export type Type = Column["type"];
+export type ColumnType = Column["type"];
 
 export const layoutSchema = z.object({
-  columns: z.array(Column),
+  columns: z.array(ColumnSchema),
 });
 
 export type Layout = z.infer<typeof layoutSchema>;
