@@ -2,11 +2,11 @@ import { faker } from "@faker-js/faker";
 import { format } from "date-fns";
 import { layoutSchema } from "./types/layout.ts";
 import { CsvStringifyStream } from "@std/csv";
-import type { Column, Layout, StringChoicesColumn } from "./types/layout.ts";
+import type { Column, Layout, ChoicesColumn } from "./types/layout.ts";
 import ProgressBar from "@deno-library/progress";
 import stub from "./stub_layout.json" with { type: "json" };
 
-function getRandomChoices(column: StringChoicesColumn) {
+function getRandomChoices(column: ChoicesColumn) {
   const randomIndex = Math.floor(Math.random() * column.choices.length);
   return column.choices[randomIndex];
 }
@@ -17,7 +17,7 @@ function generateRandomValue(column: Column) {
       return faker.string.numeric({
         length: { min: column.min, max: column.max },
       });
-    case "string-choices":
+    case "choices":
       return getRandomChoices(column);
     case "integer":
       return faker.number.int({ min: column.min, max: column.max });

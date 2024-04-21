@@ -14,7 +14,7 @@
             "type": "string",
             "enum": [
               "string",
-              "string-choices",
+              "choices",
               "integer",
               "timestamp",
               "date",
@@ -62,7 +62,7 @@
           {
             "properties": {
               "type": {
-                "const": "string-choices"
+                "const": "choices"
               }
             },
             "required": ["choices"],

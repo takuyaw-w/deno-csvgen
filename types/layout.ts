@@ -13,14 +13,14 @@ const StringColumnSchema = BaseColumnSchema.merge(z.object({
 
 export type StringColumn = z.infer<typeof StringColumnSchema>;
 
-const StringChoicesColumnSchema = BaseColumnSchema.merge(
+const ChoicesColumnSchema = BaseColumnSchema.merge(
   z.object({
-    type: z.literal("string-choices"),
+    type: z.literal("choices"),
     choices: z.array(z.string().min(1)).min(2),
   }),
 );
 
-export type StringChoicesColumn = z.infer<typeof StringChoicesColumnSchema>;
+export type ChoicesColumn = z.infer<typeof ChoicesColumnSchema>;
 
 const IntegerColumnSchema = BaseColumnSchema.merge(z.object({
   type: z.literal("integer"),
@@ -56,7 +56,7 @@ export type BooleanColumn = z.infer<typeof BooleanColumnSchema>;
 
 const ColumnSchema = z.discriminatedUnion("type", [
   StringColumnSchema,
-  StringChoicesColumnSchema,
+  ChoicesColumnSchema,
   IntegerColumnSchema,
   TimestampColumnSchema,
   DateColumnSchema,
