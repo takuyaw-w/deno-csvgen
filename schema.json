@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "columns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "string-choices",
+              "integer",
+              "timestamp",
+              "date",
+              "time",
+              "boolean"
+            ]
+          },
+          "min": {
+            "type": "integer"
+          },
+          "max": {
+            "type": "integer"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["name", "type"],
+        "anyOf": [
+          {
+            "properties": {
+              "type": {
+                "const": "string"
+              }
+            },
+            "required": ["min", "max"]
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "integer"
+              }
+            },
+            "required": ["min", "max"]
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "string-choices"
+              }
+            },
+            "required": ["choices"]
+          }
+        ]
+      }
+    }
+  },
+  "required": ["columns"]
+}
