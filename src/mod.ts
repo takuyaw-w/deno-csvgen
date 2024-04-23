@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { layoutSchema } from "./types/layout.ts";
 import type { Column, Layout } from "./types/layout.ts";
 import ProgressBar from "@deno-library/progress";
-import stub from "./stub_layout.json" with { type: "json" };
+import stub_layout from "./stubs/layout.json" with { type: "json" };
 
 function generateRandomValue(column: Column) {
   switch (column.type) {
@@ -107,5 +107,5 @@ export async function generateCsv(options: {
 export async function generateLayoutFile() {
   const fileName = "./layout-sample.json";
   await Deno.create(fileName);
-  await Deno.writeTextFile(fileName, JSON.stringify(stub, undefined, 4));
+  await Deno.writeTextFile(fileName, JSON.stringify(stub_layout, undefined, 4));
 }
