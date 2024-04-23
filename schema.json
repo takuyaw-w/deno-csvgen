@@ -31,8 +31,10 @@
           "choices": {
             "type": "array",
             "items": {
-              "type": "string"
-            }
+              "oneOf": [{ "type": "string" }, { "type": "number" }]
+            },
+            "minItems": 2,
+            "uniqueItems": true
           }
         },
         "required": ["name", "type"],

@@ -16,7 +16,7 @@ export type StringColumn = z.infer<typeof StringColumnSchema>;
 const ChoicesColumnSchema = BaseColumnSchema.merge(
   z.object({
     type: z.literal("choices"),
-    choices: z.array(z.string().min(1)).min(2),
+    choices: z.array(z.union([z.string().min(1), z.number()])).min(2),
   }),
 );
 
