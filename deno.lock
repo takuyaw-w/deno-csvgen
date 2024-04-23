@@ -16,6 +16,7 @@
       "jsr:@std/fmt@0.221": "jsr:@std/fmt@0.221.0",
       "jsr:@std/fmt@0.221.0": "jsr:@std/fmt@0.221.0",
       "jsr:@std/io@^0.222.1": "jsr:@std/io@0.222.1",
+      "jsr:@std/path@^0.223.0": "jsr:@std/path@0.223.0",
       "jsr:@std/streams@^0.222.1": "jsr:@std/streams@0.222.1",
       "jsr:@std/streams@^0.223.0": "jsr:@std/streams@0.223.0",
       "jsr:@std/text@0.221": "jsr:@std/text@0.221.0",
@@ -82,6 +83,12 @@
       },
       "@std/io@0.222.1": {
         "integrity": "45c638370bccc0687d11e32481b276126201014516ffbe2f340700b8d81c015e"
+      },
+      "@std/path@0.223.0": {
+        "integrity": "593963402d7e6597f5a6e620931661053572c982fc014000459edc1f93cc3989",
+        "dependencies": [
+          "jsr:@std/assert@^0.223.0"
+        ]
       },
       "@std/streams@0.222.1": {
         "integrity": "0bb4220c1dc5106e45a309179f76df95c786c9fff814d195d5ee2160931bfc7c",
@@ -1402,6 +1409,7 @@
       "jsr:@deno-library/progress@^1.4.9",
       "jsr:@std/async@^0.223.0",
       "jsr:@std/csv@^0.223.0",
+      "jsr:@std/path@^0.223.0",
       "jsr:@std/streams@^0.222.1",
       "npm:@faker-js/faker@^8.4.1",
       "npm:date-fns@^3.6.0",

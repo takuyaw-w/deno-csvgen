@@ -1,8 +1,9 @@
+import { CsvStringifyStream } from "@std/csv";
+import { dirname } from '@std/path'
 import { faker } from "@faker-js/faker";
 import { format } from "date-fns";
 import { layoutSchema } from "./types/layout.ts";
-import { CsvStringifyStream } from "@std/csv";
-import type { Column, Layout, ChoicesColumn } from "./types/layout.ts";
+import type { Column, Layout } from "./types/layout.ts";
 import ProgressBar from "@deno-library/progress";
 import stub from "./stub_layout.json" with { type: "json" };
 
@@ -61,7 +62,8 @@ export async function generateCsv(options: {
   // JSON読み取り処理
   const json = JSON.parse(await Deno.readTextFile(options.layout));
   const layout = layoutSchema.parse(json);
-  const csvHeaders = layout.columns.map((c) => c.name);
+  const dirPath = dirname(options.output)
+  await Deno.mkdir(dirPath, { recursive: true })
   // 書き込み処理
   const file = await Deno.open(options.output, {
     create: true,
@@ -78,7 +80,7 @@ export async function generateCsv(options: {
   const st = ReadableStream.from(generateOutput(layout, options.rows))
     .pipeThrough(
       new CsvStringifyStream({
-        columns: csvHeaders,
+        columns: layout.columns.map((c) => c.name),
         separator: getDelimiter(options.delimiter),
       }),
     )

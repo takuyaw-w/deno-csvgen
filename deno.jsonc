@@ -8,6 +8,7 @@
     "@faker-js/faker": "npm:@faker-js/faker@^8.4.1",
     "@std/async": "jsr:@std/async@^0.223.0",
     "@std/csv": "jsr:@std/csv@^0.223.0",
+    "@std/path": "jsr:@std/path@^0.223.0",
     "@std/streams": "jsr:@std/streams@^0.222.1",
     "date-fns": "npm:date-fns@^3.6.0",
     "zod": "npm:zod@^3.22.4"
