@@ -1,7 +1,8 @@
 import { Command, EnumType } from "@cliffy/command";
 import { version } from "./version.ts";
 import { generateCsv, generateLayoutFile } from "./mod.ts";
-const delimiters = new EnumType(["comma", "tab", "space", "pipe"]);
+import { delimiter } from './types/delimiter.ts'
+const delimiters = new EnumType(delimiter);
 
 try {
   await new Command()

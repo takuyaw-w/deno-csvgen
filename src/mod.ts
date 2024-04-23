@@ -4,6 +4,7 @@ import { faker } from "@faker-js/faker";
 import { format } from "date-fns";
 import { layoutSchema } from "./types/layout.ts";
 import type { Column, Layout } from "./types/layout.ts";
+import type { delimiter } from "./types/delimiter.ts"
 import ProgressBar from "@deno-library/progress";
 import stub_layout from "./stubs/layout.json" with { type: "json" };
 
@@ -39,7 +40,7 @@ function generateOutput(schema: Layout, numRecords: number) {
   return Array.from({ length: numRecords }, () => generateRow(schema));
 }
 
-function getDelimiter(delimiter: "comma" | "tab" | "space" | "pipe") {
+function getDelimiter(delimiter: delimiter) {
   switch (delimiter) {
     case "comma":
       return ",";
@@ -54,7 +55,7 @@ function getDelimiter(delimiter: "comma" | "tab" | "space" | "pipe") {
 
 export async function generateCsv(options: {
   layout: string;
-  delimiter: "comma" | "tab" | "space" | "pipe";
+  delimiter: delimiter;
   output: string;
   rows: number;
   header: boolean;
