@@ -6,11 +6,6 @@ import type { Column, Layout, ChoicesColumn } from "./types/layout.ts";
 import ProgressBar from "@deno-library/progress";
 import stub from "./stub_layout.json" with { type: "json" };
 
-function getRandomChoices(column: ChoicesColumn) {
-  const randomIndex = Math.floor(Math.random() * column.choices.length);
-  return column.choices[randomIndex];
-}
-
 function generateRandomValue(column: Column) {
   switch (column.type) {
     case "string":
@@ -18,7 +13,7 @@ function generateRandomValue(column: Column) {
         length: { min: column.min, max: column.max },
       });
     case "choices":
-      return getRandomChoices(column);
+      return faker.helpers.arrayElement(column.choices);
     case "integer":
       return faker.number.int({ min: column.min, max: column.max });
     case "boolean":
