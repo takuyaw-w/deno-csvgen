@@ -1,10 +1,10 @@
 import { CsvStringifyStream } from "@std/csv";
-import { dirname } from '@std/path'
+import { dirname } from "@std/path";
 import { faker } from "@faker-js/faker";
 import { format } from "date-fns";
 import { layoutSchema } from "./types/layout.ts";
 import type { Column, Layout } from "./types/layout.ts";
-import type { delimiter } from "./types/delimiter.ts"
+import type { Delimiter } from "./types/delimiter.ts";
 import ProgressBar from "@deno-library/progress";
 import stub_layout from "./stubs/layout.json" with { type: "json" };
 
@@ -36,11 +36,24 @@ function generateRow(layout: Layout): Record<string, string | number> {
   }, {} as Record<string, string | number>);
 }
 
-function generateOutput(schema: Layout, numRecords: number) {
-  return Array.from({ length: numRecords }, () => generateRow(schema));
+function createDataStream(
+  layout: Layout,
+  numRecords: number,
+): ReadableStream<Record<string, string | number | boolean>> {
+  let index = 0;
+  return new ReadableStream({
+    pull(controller) {
+      if (index < numRecords) {
+        controller.enqueue(generateRow(layout));
+        index++;
+      } else {
+        controller.close();
+      }
+    },
+  });
 }
 
-function getDelimiter(delimiter: delimiter) {
+function getDelimiter(delimiter: Delimiter) {
   switch (delimiter) {
     case "comma":
       return ",";
@@ -53,9 +66,20 @@ function getDelimiter(delimiter: delimiter) {
   }
 }
 
+function concatUint8Arrays(arrays: Uint8Array[]): Uint8Array {
+  const totalLength = arrays.reduce((acc, value) => acc + value.length, 0);
+  const result = new Uint8Array(totalLength);
+  let offset = 0;
+  for (const arr of arrays) {
+    result.set(arr, offset);
+    offset += arr.length;
+  }
+  return result;
+}
+
 export async function generateCsv(options: {
   layout: string;
-  delimiter: delimiter;
+  delimiter: Delimiter;
   output: string;
   rows: number;
   header: boolean;
@@ -63,8 +87,8 @@ export async function generateCsv(options: {
   // JSON読み取り処理
   const json = JSON.parse(await Deno.readTextFile(options.layout));
   const layout = layoutSchema.parse(json);
-  const dirPath = dirname(options.output)
-  await Deno.mkdir(dirPath, { recursive: true })
+  const dirPath = dirname(options.output);
+  await Deno.mkdir(dirPath, { recursive: true });
   // 書き込み処理
   const file = await Deno.open(options.output, {
     create: true,
@@ -78,7 +102,7 @@ export async function generateCsv(options: {
     complete: "=",
     incomplete: "-",
   });
-  const st = ReadableStream.from(generateOutput(layout, options.rows))
+  const dataStream = createDataStream(layout, options.rows)
     .pipeThrough(
       new CsvStringifyStream({
         columns: layout.columns.map((c) => c.name),
@@ -87,19 +111,30 @@ export async function generateCsv(options: {
     )
     .pipeThrough(new TextEncoderStream());
 
-  const re = st.getReader();
+  const reader = dataStream.getReader();
 
   if (!options.header) {
-    await re.read();
+    await reader.read();
   }
 
+  let buffer: Uint8Array[] = [];
+  const BATCH_SIZE = 1000;
   while (true) {
-    const { done, value } = await re.read();
+    const { done, value } = await reader.read();
     if (done) {
       break;
     }
+    buffer.push(value);
+
+    if (buffer.length >= BATCH_SIZE) {
+      await file.write(concatUint8Arrays(buffer));
+      buffer = [];
+    }
     progress.render(completed++);
-    await file.write(value);
+  }
+
+  if (buffer.length > 0) {
+    await file.write(concatUint8Arrays(buffer));
   }
 
   file.close();
@@ -107,6 +142,5 @@ export async function generateCsv(options: {
 
 export async function generateLayoutFile() {
   const fileName = "./layout-sample.json";
-  await Deno.create(fileName);
   await Deno.writeTextFile(fileName, JSON.stringify(stub_layout, undefined, 4));
 }

@@ -19,7 +19,8 @@ csvgen --layout <input> [-d <delimiter>] [-o <filepath>] [-n <rows>]
 - -h, --help: Show this help.
 - -V, --version: Show the version number for this program.
 - -l, --layout \<input\>: Path to the layout file (required).
-- -d, --delimiter \<delimiter\>: Specify the delimiter (Default: "comma", Values: "comma", "tab", "space", "pipe").
+- -d, --delimiter \<delimiter\>: Specify the delimiter (Default: "comma",
+  Values: "comma", "tab", "space", "pipe").
 - -o, --output \<filepath\>: Path to the output file (Default: "./dummy.csv").
 - -n, --rows \<rows\>: Number of rows (Default: 10).
 - --no-header: Generate CSV without header.

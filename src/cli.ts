@@ -1,7 +1,7 @@
 import { Command, EnumType } from "@cliffy/command";
 import { version } from "./version.ts";
 import { generateCsv, generateLayoutFile } from "./mod.ts";
-import { delimiter } from './types/delimiter.ts'
+import { delimiter } from "./types/delimiter.ts";
 const delimiters = new EnumType(delimiter);
 
 try {
